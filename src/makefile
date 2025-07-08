@@ -15,7 +15,18 @@ flash: check-port build
 	docker create --name $(CONTAINER_NAME) --device=$(PORT) -t rubber-nugget:latest
 	docker start $(CONTAINER_NAME)
 	docker exec $(CONTAINER_NAME) bash -c \
-		'./arduino-cli upload -b esp32:esp32:esp32s2 --port $(PORT) RubberNugget/ && sleep 2'
+		'./arduino-cli config dump && ./arduino-cli board list && ./arduino-cli upload --fqbn esp32:esp32:esp32s3 --port $(PORT)  RubberNugget/ && sleep 2'
+ifeq ($(RESET_SCRIPTS_DURING_FLASH), true)
+	docker exec $(CONTAINER_NAME) bash -c \
+		'echo "====" && python3 -m esptool --chip esp32s3 --port $(PORT) --before default_reset --after no_reset write_flash 0x110000 --baud 115200 default.img'
+endif
+	docker rm --force $(CONTAINER_NAME)
+
+flashs2: check-port build
+	docker create --name $(CONTAINER_NAME) --device=$(PORT) -t rubber-nugget:latest
+	docker start $(CONTAINER_NAME)
+	docker exec $(CONTAINER_NAME) bash -c \
+		'./arduino-cli board list && ./arduino-cli upload --fqbn esp32:esp32:esp32s3 --port $(PORT) RubberNugget/ && sleep 2'
 ifeq ($(RESET_SCRIPTS_DURING_FLASH), true)
 	docker exec $(CONTAINER_NAME) bash -c \
 		'python3 -m esptool --after no_reset write_flash 0x110000 default.img'

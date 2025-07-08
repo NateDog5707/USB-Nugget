@@ -1,5 +1,7 @@
 board_manager:
-  additional_urls: ["https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json"]
+  additional_urls: 
+    - "https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json"
+    - "https://dl.espressif.com/dl/package_esp32_index.json"
 daemon:
   port: "50051"
 directories:
@@ -21,4 +23,8 @@ sketch:
   always_export_binaries: false
 updater:
   enable_notification: true
-
+boards:
+  esp32:esp32:esp32s3:
+    build:
+      properties:
+        upload.speed: "115200"
