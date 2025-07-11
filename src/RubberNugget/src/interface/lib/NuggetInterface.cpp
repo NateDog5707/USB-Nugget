@@ -1,5 +1,6 @@
 #include "NuggetInterface.h"
 #include "dejavu.h"
+#include "Wire.h"
 
 //----------------------------------------
 // NuggetInputs
@@ -51,7 +52,7 @@ NuggetScreen::NuggetScreen(){
 }
 NuggetScreen::~NuggetScreen(){
 }
-void NuggetScreen::setDisplay(SH1106Wire* display){
+void NuggetScreen::setDisplay(Adafruit_SSD1306* display){
   this->display = display;
 }
 void NuggetScreen::setInputs(NuggetInputs* inputs){
@@ -81,16 +82,20 @@ int NuggetScreen::_update(){
 //----------------------------------------
 // NuggetInterface
 NuggetInterface::NuggetInterface(){
-  SH1106Wire* nDisplay = new SH1106Wire(0x3C, 33, 35);
+  Wire.begin(LCD_SDA, LCD_SCL);
+  Adafruit_SSD1306* nDisplay = new Adafruit_SSD1306(LCD_W, LCD_H, &Wire, -1); // fix this to ssd1306
   this->inputs = new NuggetInputs();
   this->screenLock = xSemaphoreCreateMutex();
   if (this->screenLock == nullptr) {
     Serial.println("[NuggetInterface] mutex could not be created");
   }
-  nDisplay->init();
-  nDisplay->flipScreenVertically();
-  nDisplay->setTextAlignment(TEXT_ALIGN_LEFT);
+  //nDisplay->init();
+  nDisplay->begin();
+  //nDisplay->flipScreenVertically();
+  //nDisplay->setTextAlignment(TEXT_ALIGN_LEFT);
   nDisplay->setFont(DejaVu_Sans_Mono_10);
+  nDisplay->setRotation(2);  // 0–3, depending on orientation
+  
   this->display = nDisplay;
   this->currentScreenNode = nullptr;
 

@@ -2,7 +2,7 @@
 #define NUGGET_INTERFACE_H
 
 #include <Adafruit_NeoPixel.h>
-#include "SH1106Wire.h"
+#include <Adafruit_SSD1306>
 
 //----------------------------------------
 // NuggetInputs
@@ -19,6 +19,12 @@
 
 #define NEOPIXEL_PIN 12
 #define NEOPIXEL_PIN_CNT 1
+
+#define LCD_SCL 36
+#define LCD_SDA 35
+
+#define LCD_W 128
+#define LCD_H 64
 
 #define EVENT_INIT 100
 
@@ -49,13 +55,14 @@ class NuggetScreen {
       virtual ~NuggetScreen();
       virtual bool draw() = 0;
       virtual int update(int){return SCREEN_NONE;};
-      void setDisplay(SH1106Wire*);
+      void setDisplay(Adafruit_SSD1306*);
       void setInputs(NuggetInputs*);
       void setStrip(Adafruit_NeoPixel*);
       void setNuggetInterface(NuggetInterface*);
       int _update();
    protected:
-      SH1106Wire* display;
+      //SH1106Wire* display;
+      Adafruit_SSD1306* display;
       NuggetInputs* inputs;
       Adafruit_NeoPixel* strip;
       void pushScreen(NuggetScreen*);
@@ -87,7 +94,8 @@ class NuggetInterface {
     bool popScreen();
     bool injectScreen(NuggetScreen*);
   private:
-    SH1106Wire* display;
+    //SH1106Wire* display;
+    Adafruit_SSD1306* display;
     NuggetInputs* inputs;
     Adafruit_NeoPixel* strip;
     volatile ScreenNode* currentScreenNode;

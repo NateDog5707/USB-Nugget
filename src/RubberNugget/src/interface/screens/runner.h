@@ -14,8 +14,8 @@ class ScriptRunnerScreen : public NuggetScreen {
     bool has_run;
 };
 
-void runPayload(String payload, SH1106Wire* display, Adafruit_NeoPixel* strip);
-void processDuckyScript(String ducky, SH1106Wire* display, Adafruit_NeoPixel* strip);
+void runPayload(String payload, Adafruit_SSD1306* display, Adafruit_NeoPixel* strip);
+void processDuckyScript(String ducky, Adafruit_SSD1306* display, Adafruit_NeoPixel* strip);
 void pressNamedKey(String keyPress, uint8_t modifiers);
 bool keyKnown(String keyPress);
 
