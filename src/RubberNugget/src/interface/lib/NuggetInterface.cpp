@@ -1,6 +1,7 @@
 #include "NuggetInterface.h"
 #include "dejavu.h"
 #include "Wire.h"
+#include <Fonts/FreeMono9pt7b.h>  
 
 //----------------------------------------
 // NuggetInputs
@@ -93,7 +94,8 @@ NuggetInterface::NuggetInterface(){
   nDisplay->begin();
   //nDisplay->flipScreenVertically();
   //nDisplay->setTextAlignment(TEXT_ALIGN_LEFT);
-  nDisplay->setFont(DejaVu_Sans_Mono_10);
+  //nDisplay->setFont(&DejaVu_Sans_Mono_10);
+  nDisplay->setFont(&FreeMono9pt7b);
   nDisplay->setRotation(2);  // 0–3, depending on orientation
   
   this->display = nDisplay;
@@ -190,7 +192,7 @@ bool NuggetInterface::draw() {
   if (this->currentScreenNode == nullptr){
     return false;
   }
-  this->display->clear();
+  this->display->clearDisplay();
   this->currentScreenNode->screen->draw();
   this->display->display();
   return true;

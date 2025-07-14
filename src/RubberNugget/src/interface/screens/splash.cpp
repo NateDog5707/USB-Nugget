@@ -19,10 +19,11 @@ int SplashScreen::update(int button) {
 }
 
 bool SplashScreen::draw() {
-  display->drawXbm(0, 0, 128, 64, splash_bits);
+//   display->drawXbm(0, 0, 128, 64, splash_bits);
+  display->drawBitmap(0,0,splash_bits,128,64, WHITE);
   //display->drawString(94,0,"1.2.1");
   display->setCursor(94, 0);
   display->print("1.2.1");
-  display->drawRect(92,0,36,12);
+  display->drawRect(92,0,36,12,WHITE);
   return true;
 }

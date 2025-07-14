@@ -101,11 +101,11 @@ bool DirScreen::draw() {
     display->print(fileName);
   }
   // Cursor
-  display->drawRect(2,10*(selected-top)+6,2,2);
+  display->drawRect(2,10*(selected-top)+6,2,2, WHITE);
 
   // Footer
-  display->drawLine(0, 54, 127, 54);
-  display->drawLine(0, 53, 127, 53);
+  display->drawLine(0, 54, 127, 54, WHITE);
+  display->drawLine(0, 53, 127, 53, WHITE);
   //display->drawString(0,54,"Dir:");
   display->setCursor(0, 54);
   display->print("Dir: ");
@@ -119,7 +119,8 @@ bool DirScreen::draw() {
     display->print(path);
   }
   // Cat image
-  display->drawXbm(0, 0, 128, 64, main_cat_image_bits);
+  //display->drawXbm(0, 0, 128, 64, main_cat_image_bits);
+  display->drawBitmap(0,0, main_cat_image_bits, 128, 64, WHITE);
   return true;
 }
 

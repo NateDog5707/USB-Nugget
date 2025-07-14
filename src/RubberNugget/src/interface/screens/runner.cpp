@@ -32,15 +32,16 @@ bool ScriptRunnerScreen::draw() {
     display->clearDisplay();
     return true;
   }
-  display->drawXbm(0, 0, 128, 64, cat_with_exclamation_points_image_bits);
+  //display->drawXbm(0, 0, 128, 64, cat_with_exclamation_points_image_bits);
+  display->drawBitmap(0,0,cat_with_exclamation_points_image_bits,128,64, WHITE);
   //display->drawString(3,9,"Press LEFT");
   display->setCursor(3, 9);
   display->print("Press LEFT");
   //display->drawString(3,19,"to go back");
   display->setCursor(3, 19);
   display->print("to go back");
-  display->drawLine(0, 54, 127, 54);
-  display->drawLine(0, 53, 127, 53);
+  display->drawLine(0, 54, 127, 54, WHITE);
+  display->drawLine(0, 53, 127, 53, WHITE);
   //display->drawString(0, 54, "FINISHED PAYLOAD");
   display->setCursor(0, 54);
   display->print("FINISHED PAYLOAD");
@@ -65,7 +66,8 @@ void runPayload(String payload, Adafruit_SSD1306* display, Adafruit_NeoPixel* st
     display->clearDisplay();
 
     //manually update display
-    display->drawXbm(0, 0, 128, 64, cat_with_exclamation_points_image_bits);
+    //display->drawXbm(0, 0, 128, 64, cat_with_exclamation_points_image_bits);
+    display->drawBitmap(0,0, cat_with_exclamation_points_image_bits, 128, 64, WHITE);
     display->display();
     strip->setPixelColor(0, strip->Color(0,0, 0));
     strip->show(); strip->show();
@@ -99,8 +101,8 @@ void processDuckyScript(String ducky, Adafruit_SSD1306* display, Adafruit_NeoPix
   const KEYMAP* keymap = keyboard.getKeymap();
 
   display->clearDisplay();
-  display->drawLine(0, 54, 127, 54);
-  display->drawLine(0, 53, 127, 53);
+  display->drawLine(0, 54, 127, 54, WHITE);
+  display->drawLine(0, 53, 127, 53, WHITE);
   //display->drawString(0, 54, "RUNNING PAYLOAD");
   display->setCursor(0, 54);
   display->print("RUNNING PAYLOAD");
@@ -138,7 +140,8 @@ void processDuckyScript(String ducky, Adafruit_SSD1306* display, Adafruit_NeoPix
     //display->drawString(3,22,(String) ducky.substring(ducky.indexOf(' ')+1, ducky.length()));
     display->setCursor(3, 22);
     display->print((String) ducky.substring(ducky.indexOf(' ')+1, ducky.length()));
-    display->drawXbm(0, 0, 128, 64, cat_with_reload_spinner_image_bits);
+    // display->drawXbm(0, 0, 128, 64, cat_with_reload_spinner_image_bits);
+    display->drawBitmap(0,0, cat_with_reload_spinner_image_bits,128,64,WHITE);
     display->display();
     delay(ducky.substring(ducky.indexOf(' ')+1, ducky.length()).toInt()); // delay in MS
     Serial.println("Delayed!");       
@@ -153,7 +156,8 @@ void processDuckyScript(String ducky, Adafruit_SSD1306* display, Adafruit_NeoPix
     //display->drawString(3,32,(String) ducky.substring(ducky.indexOf(' ')+1, ducky.length()));
     display->setCursor(3, 32);
     display->print((String) ducky.substring(ducky.indexOf(' ')+1, ducky.length()));
-    display->drawXbm(0, 0, 128, 64, cat_with_reload_spinner_image_bits);
+    //display->drawXbm(0, 0, 128, 64, cat_with_reload_spinner_image_bits);
+    display->drawBitmap(0,0, cat_with_reload_spinner_image_bits,128,64,WHITE);
     display->display();
     defaultDelay = ducky.substring(ducky.indexOf(' ')+1, ducky.length()).toInt();
   }
@@ -164,7 +168,8 @@ void processDuckyScript(String ducky, Adafruit_SSD1306* display, Adafruit_NeoPix
     //display->drawString(3,22,(String) ducky.substring(ducky.indexOf(' ')+1, ducky.length())); // accept single color parameter
     display->setCursor(3, 22);
     display->print((String) ducky.substring(ducky.indexOf(' ')+1, ducky.length()));
-    display->drawXbm(0, 0, 128, 64, cat_with_reload_spinner_image_bits);
+    // display->drawXbm(0, 0, 128, 64, cat_with_reload_spinner_image_bits);
+    display->drawBitmap(0,0, cat_with_reload_spinner_image_bits,128,64,WHITE);
     display->display();
     String color = (String) ducky.substring(ducky.indexOf(' ')+1, ducky.length());
     color.toUpperCase();
@@ -204,7 +209,8 @@ void processDuckyScript(String ducky, Adafruit_SSD1306* display, Adafruit_NeoPix
       display->setCursor(3, 22);
       display->print(String(ducky.substring(ducky.indexOf(' ')+1, ducky.length())));
     }
-    display->drawXbm(0, 0, 128, 64, cat_with_one_exclamation_point_image_bits);
+    // display->drawXbm(0, 0, 128, 64, cat_with_one_exclamation_point_image_bits);
+    display->drawBitmap(0,0, cat_with_one_exclamation_point_image_bits,128,64,WHITE);
     display->display();
     Serial.println("String");
     String tmpString = String(ducky.substring(ducky.indexOf(' ')+1, ducky.length()));
