@@ -82,6 +82,7 @@ int DirScreen::update(int btn) {
 // │/path/items       │  <-- footer
 // └──────────────────┘
 bool DirScreen::draw() {
+  display->clearDisplay();
   if (!files || this->selected >= this->numFiles || (this->top > 0 && this->numFiles < DIR_SCREEN_MAX_SHOWN)) {
     Serial.printf("[displayFiles] condition error: (files:%p)(numFiles:%d)(selected:%d)(top:%d)\n");
     // TODO: display error screen
@@ -95,7 +96,9 @@ bool DirScreen::draw() {
     if (fileName.length() > 12) {
       fileName = fileName.substring(0, 9) + "...";
     }
-    display->drawString(6, 10*(i-top), fileName);
+    //display->drawString(6, 10*(i-top), fileName);
+    display->setCursor(6, 10*(i-top));
+    display->print(fileName);
   }
   // Cursor
   display->drawRect(2,10*(selected-top)+6,2,2);
@@ -103,11 +106,17 @@ bool DirScreen::draw() {
   // Footer
   display->drawLine(0, 54, 127, 54);
   display->drawLine(0, 53, 127, 53);
-  display->drawString(0,54,"Dir:");
+  //display->drawString(0,54,"Dir:");
+  display->setCursor(0, 54);
+  display->print("Dir: ");
   if(path.length() > 17) {
-    display->drawString(25, 54, path.substring(0,14)+"...");
+    //display->drawString(25, 54, path.substring(0,14)+"...");
+    display->setCursor(25, 54);
+    display->print(path.substring(0,14)+"...");
   } else {
-    display->drawString(25, 54, path);
+    //display->drawString(25, 54, path);
+    display->setCursor(25, 54);
+    display->print(path);
   }
   // Cat image
   display->drawXbm(0, 0, 128, 64, main_cat_image_bits);

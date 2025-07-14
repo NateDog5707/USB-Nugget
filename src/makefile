@@ -3,12 +3,16 @@ RESET_SCRIPTS_DURING_FLASH ?= false
 IMAGE_NAME = rubber-nugget
 CONTAINER_NAME := $(IMAGE_NAME)-$(shell date +%s)
 ARDUINO_CLI_VERSION = 0.22.0
+NO_CACHE ?= false
 
 submodules:
 	git submodule init
 	git submodule update
 
 build: submodules
+ifeq ($(NO_CACHE), true)
+	docker build . --no-cache --file Dockerfile --build-arg ARDUINO_CLI_VERSION=$(ARDUINO_CLI_VERSION) --tag rubber-nugget
+endif
 	docker build . --file Dockerfile --build-arg ARDUINO_CLI_VERSION=$(ARDUINO_CLI_VERSION) --tag rubber-nugget
 
 flash: check-port build

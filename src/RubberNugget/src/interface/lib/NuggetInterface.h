@@ -2,7 +2,7 @@
 #define NUGGET_INTERFACE_H
 
 #include <Adafruit_NeoPixel.h>
-#include <Adafruit_SSD1306>
+#include <Adafruit_SSD1306.h>
 
 //----------------------------------------
 // NuggetInputs

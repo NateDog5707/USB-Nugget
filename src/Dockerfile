@@ -1,6 +1,10 @@
 # syntax=docker/dockerfile:1
 FROM debian:buster
-WORKDIR /app
+RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list && \
+    sed -i 's|http://security.debian.org/debian-security|http://archive.debian.org/debian-security|g' /etc/apt/sources.list && \
+    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until
+
+WORKDIR /root
 
 RUN apt-get update && apt-get install -y \
     wget \
@@ -20,10 +24,14 @@ COPY arduino-cli.yaml .
 RUN ./arduino-cli core update-index --config-file arduino-cli.yaml
 RUN ./arduino-cli core install esp32:esp32@2.0.4
 RUN ./arduino-cli lib install \
+    "Adafruit SSD1306" \
+    "Adafruit GFX Library" \
     "ESP8266 and ESP32 OLED driver for SSD1306 displays" \
     "Adafruit NeoPixel"
+RUN ./arduino-cli lib list
 COPY third_party ./third_party
 RUN ./third_party/arduino_cli_install.sh $(readlink -f ./arduino-cli)
+RUN ./arduino-cli config dump
 
 # Patch to force esptool to use no_reset option. This is necessary because
 # arduino-cli does not provide an option to forward this flag. This may become
