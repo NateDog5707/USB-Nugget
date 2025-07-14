@@ -40,7 +40,7 @@ endif
 generate_bin: build
 	docker create --name $(CONTAINER_NAME) -t rubber-nugget:latest
 	docker start $(CONTAINER_NAME)
-	docker cp $(CONTAINER_NAME):/app/build .
+	docker cp $(CONTAINER_NAME):/root/build .
 	docker rm --force $(CONTAINER_NAME)
 	cp usb_nugget_bin_template usb_nugget.bin
 	dd of=usb_nugget.bin if=build/RubberNugget.ino.bin seek=65536 bs=1 conv=notrunc
@@ -79,7 +79,7 @@ mac-build: submodules
 
 flash-on-mac: check-mac-port check-mac-deps arduino-cli mac-build
 	sudo docker create --name $(CONTAINER_NAME) -t rubber-nugget:latest
-	sudo docker cp $(CONTAINER_NAME):/app/build .
+	sudo docker cp $(CONTAINER_NAME):/root/build .
 	sudo docker rm --force $(CONTAINER_NAME)
 ifeq ($(RESET_SCRIPTS_DURING_FLASH), true)
 	python3 -m esptool --after no_reset write_flash 0x110000 fatfs/default.img
